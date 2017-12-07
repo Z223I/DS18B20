@@ -11,45 +11,30 @@ device_file = device_folder + '/w1_slave'
 
 
 device_folders = glob.glob(base_dir + '28*')
-#device_files   = [ os.path.split(x)[1][3:] for x in device_folders ]
 
 device_files = []
 for xfolder in device_folders:
-    print "--> " + xfolder + '/w1_slave'
     device_files.append( xfolder + '/w1_slave' )
 
-print 
-print "--------"
-print
 
+#for therm in device_files:
+#    print therm
 
-for therm in device_files:
-    print therm
-
-
-#device_files = []
-#device_files.append("28-0417a0dfffff")
-#device_files.append("28-0417a1107aff")
 print "Number of thermometers: ", len(device_files)
 
 device_file = base_dir + device_files[0] + "/w1_slave"
 device_file = device_files[0]
 
-print
-print "lksdf"
-print
-print device_file
 
 
-
-def read_temp_raw():
-    f = open(device_file, 'r')
+def read_temp_raw(_device_file):
+    f = open(_device_file, 'r')
     lines = f.readlines()
     f.close()
     return lines
 
-def read_temp():
-    lines = read_temp_raw()
+def read_temp(_device_file):
+    lines = read_temp_raw(_device_file)
     while lines[0].strip()[-3:] != 'YES':
         time.sleep(0.2)
         lines = read_temp_raw()
@@ -61,5 +46,10 @@ def read_temp():
         return temp_c, temp_f
 	
 while True:
-	print(read_temp())	
+	#print(read_temp())
+
+        for temperatureFile in device_files:
+            print( read_temp( temperatureFile ) )
+
+        print
 	time.sleep(1)
