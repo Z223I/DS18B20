@@ -27,12 +27,19 @@ class DS18B20:
 	
     	print "Number of thermometers: ", len(self.device_files)
 	
+        self.device_names = []
+
+
+
 
     def read_temp_raw(self, _device_file):
         f = open(_device_file, 'r')
         lines = f.readlines()
         f.close()
         return lines
+
+
+
 
     def read_temp(self, _device_file):
         lines = self.read_temp_raw(_device_file)
@@ -44,19 +51,39 @@ class DS18B20:
             temp_string = lines[1][equals_pos+2:]
             temp_c = float(temp_string) / 1000.0
             temp_f = temp_c * 9.0 / 5.0 + 32.0
-            return temp_c, temp_f
+            return temp_f
+
+
+
 
     def Exec(self):	
         while True:
-            for temperatureFile in self.device_files:
-                print( self.read_temp( temperatureFile ) )
-
-            print
+            if len(self.device_files) == len(self.device_names):
+                print "match"
+            else:
+            	for temperatureFile in self.device_files:
+                	print( self.read_temp( temperatureFile ) )
+	
+            	print
 	    time.sleep(1)
+	
+    def NameDevice(self, name):
+        # This must be done in the same order that the devices are listed.
+
+        # TODO: Sanity check need to see if there are too many names.
+
+
+        self.device_names.append( name )
+
+
 #
 # End class DS18B20
 #
 
 
 therms = DS18B20()
+
+therms.NameDevice( "Air" )
+therms.NameDevice( "Water" )
+
 therms.Exec()
