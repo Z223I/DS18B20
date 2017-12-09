@@ -57,23 +57,17 @@ class DS18B20:
 
 
     def finish_dict(self):	
-        #while True:
-            NumberFiles = len( self.device_files )
-            NumberNames = len( self.device_names )
-            if NumberFiles == NumberNames :
-                #print "match"
-                for sensor in range( NumberFiles ):
-                    name = self.device_names[sensor]
-                    file = self.device_files[sensor]
-                    self.sensor_dict[ name ] = file
-                    #print name, self.read_temp( file )
-                # end for
-            else:
-            	for temperatureFile in self.device_files:
-                	print( self.read_temp( temperatureFile ) )
-	
-            	print
-	    time.sleep(1)
+        NumberFiles = len( self.device_files )
+        NumberNames = len( self.device_names )
+        if NumberFiles == NumberNames :
+            #print "match"
+            for sensor in range( NumberFiles ):
+                name = self.device_names[sensor]
+                file = self.device_files[sensor]
+                self.sensor_dict[ name ] = file
+                #print name, self.read_temp( file )
+            # end for
+        # end if
 	
     def NameDevice(self, name):
         # This must be done in the same order that the devices are listed.
@@ -86,16 +80,10 @@ class DS18B20:
     def create_dict(self):
         self.sensor_dict = dict.fromkeys( self.device_names, self.device_files )
         self.finish_dict()
-        print "sensor_dict: ", str( self.sensor_dict )
+        #print "sensor_dict: ", str( self.sensor_dict )
 
     def get_current_temp(self, name):
-        file = self.sensor_dict[ "Water" ]
-
-
-        print "...", file
-
-
-
+        file = self.sensor_dict[ name ]
         return self.read_temp( file )
 
 #
@@ -110,8 +98,12 @@ therms.NameDevice( "Water" )
 therms.create_dict()
 
 while True:
-    temp = therms.get_current_temp( "Water" )
-    print "Water temp: ", temp
+    water_temp = therms.get_current_temp( "Water" )
+    print "Water temp: ", water_temp
 
+    air_temp = therms.get_current_temp( "Air" )
+    print "Air temp: ", air_temp
 
-#therms.execute()
+    print
+
+    time.sleep(2)
