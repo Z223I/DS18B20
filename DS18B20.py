@@ -18,14 +18,13 @@ class DS18B20:
     	device_folders = glob.glob(base_dir + '28*')
 	
     	self.device_files = []
-    	for xfolder in device_folders:
-            self.device_files.append( xfolder + '/w1_slave' )
+    	for folder in device_folders:
+            self.device_files.append( folder + '/w1_slave' )
 	
-	
-    	for therm in self.device_files:
-            print therm
-	
-    	print "Number of thermometers: ", len(self.device_files)
+#    	for file in self.device_files:
+#            print file
+#	
+#    	print "Number of thermometers: ", len(self.device_files)
 	
         self.device_names = []
 
