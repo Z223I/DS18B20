@@ -58,8 +58,11 @@ class DS18B20:
 
     def Exec(self):	
         while True:
-            if len(self.device_files) == len(self.device_names):
+            NumberFiles = self.device_files
+            NumberNames = self.device_names
+            if NumberFiles == NumberNames :
                 print "match"
+            
             else:
             	for temperatureFile in self.device_files:
                 	print( self.read_temp( temperatureFile ) )
