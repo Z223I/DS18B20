@@ -56,7 +56,7 @@ class DS18B20:
 
 
 
-    def Exec(self):	
+    def execute(self):	
         while True:
             NumberFiles = len( self.device_files )
             NumberNames = len( self.device_names )
@@ -82,6 +82,12 @@ class DS18B20:
 
         self.device_names.append( name )
 
+    def create_dict(self):
+        self.sensor_dict = dict.fromkeys( self.device_names, self.device_files )
+
+    def get_current_temp(self, name):
+        file = self.sensor_dict[ 'Water' ]
+        return self.read_temp( file )
 
 #
 # End class DS18B20
@@ -90,7 +96,13 @@ class DS18B20:
 
 therms = DS18B20()
 
-therms.NameDevice( "Air" )
-therms.NameDevice( "Water" )
+therms.NameDevice( 'Air' )
+therms.NameDevice( 'Water' )
+therms.create_dict()
 
-therms.Exec()
+while True:
+    temp = therms.get_current_temp( 'Water' )
+    print "Water temp: ", temp
+
+
+#therms.execute()
