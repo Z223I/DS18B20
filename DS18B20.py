@@ -6,6 +6,9 @@ import time
 #
 # Class Name:  DS18B20
 #
+# NameDevice( "device name" ) must be called for every DS18B20.
+# CreateDict() must be called after all necessary calls to NameDevice.
+#
 #*******************************************************************************
 
 class DS18B20:
